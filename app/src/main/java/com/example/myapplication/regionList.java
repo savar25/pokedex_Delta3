@@ -90,7 +90,7 @@ public class regionList extends AppCompatActivity {
         Drawable drawable=getDrawable(R.drawable.circular);
         progressBar.setProgressDrawable(drawable);
         progressBar.setVisibility(View.VISIBLE);
-
+        progressBar.setClickable(false);
 
         setPager();
          final getsecondInstance getsecondInstanceS = RetrofitClientInstance.getRetrofit().create(com.example.network.getsecondInstance.class);

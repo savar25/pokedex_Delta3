@@ -1,18 +1,33 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import android.app.ProgressDialog;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,18 +52,21 @@ public class list extends AppCompatActivity {
     Integer btnVal=0;
     int k=25;
     rvAdapter rvAdapter;
+    RecyclerView recyclerView;
+   sqlDatabase database;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
         Log.d(TAG, "onCreate: ");
 
-
+        database=new sqlDatabase(this);
         progressDialog=findViewById(R.id.progressBar);
         Drawable drawable=getDrawable(R.drawable.circular);
         progressDialog.setProgressDrawable(drawable);
         progressDialog.setVisibility(View.VISIBLE);
-
+        progressDialog.setClickable(false);
 
         final EditText search=findViewById(R.id.searchBar);
         search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -279,18 +297,83 @@ public class list extends AppCompatActivity {
     public void generateList(List<pokemon> nameList){
             if(this.nameList.size()==k) {
                 progressDialog.setVisibility(View.GONE);
-                RecyclerView recyclerView=findViewById(R.id.rec);
+                recyclerView=findViewById(R.id.rec);
                 rvAdapter=new rvAdapter(nameList,list.this);
                 Log.d(TAG, "generateList: "+nameList);
+                new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerView);
                 recyclerView.setLayoutManager(new LinearLayoutManager(list.this));
                 recyclerView.setAdapter(rvAdapter);
             }
 
     }
 
+
+    ItemTouchHelper.SimpleCallback simpleCallback=new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+            pokemon itemPoke = nameList.get(viewHolder.getAdapterPosition());
+            if (checkTable(itemPoke.getName())) {
+                Toast.makeText(list.this, "Already in Favourites", Toast.LENGTH_SHORT).show();
+                rvAdapter.notifyDataSetChanged();
+            } else {
+                Toast.makeText(list.this, "Added to Favourites", Toast.LENGTH_SHORT).show();
+                database.addPoke(itemPoke);
+                nameList.remove(viewHolder.getAdapterPosition());
+
+                rvAdapter.notifyDataSetChanged();
+            }
+        }
+
+        @Override
+        public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+
+            boolean flag = false;
+            pokemon itemPoke = nameList.get(viewHolder.getAdapterPosition());
+            if(checkTable(itemPoke.getName())){
+                new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                        .addBackgroundColor(ContextCompat.getColor(list.this, R.color.red))
+                        .addActionIcon(R.drawable.ic_not)
+                        .addSwipeRightLabel("Already In Favourites")
+                        .setSwipeRightLabelColor(getResources().getColor(R.color.white,null))
+                        .setSwipeRightLabelTextSize((int)TypedValue.COMPLEX_UNIT_DIP,14)
+                        .create()
+                        .decorate();
+            }else {
+                new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                        .addBackgroundColor(ContextCompat.getColor(list.this, R.color.red))
+                        .addActionIcon(R.drawable.ic_fav_whilte)
+                        .addSwipeRightLabel("Add To Favourites")
+                        .setSwipeRightLabelColor(getResources().getColor(R.color.white, null))
+                        .setSwipeRightLabelTextSize((int) TypedValue.COMPLEX_UNIT_DIP, 14)
+                        .create()
+                        .decorate();
+            }
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+
+
+        }
+    };
+
+
     public void setPager(){
         TextView pager=findViewById(R.id.pager);
         pager.setText("Page: "+ (btnVal+1)+"/25");
+    }
+
+    public boolean checkTable(String s){
+        Cursor cursor=database.getNames();
+        while(cursor.moveToNext()){
+            if(s.toLowerCase().equals(cursor.getString(0).toLowerCase())){
+                return true;
+            }
+        }
+        return false;
     }
 }
 

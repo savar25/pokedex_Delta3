@@ -7,4 +7,10 @@
     <color name="randBlue">#32aaff</color>
     <color name="paleYellow">#ffffaf</color>
     <color name="red">#FF0000</color>
+    <color name="lpink">#FFB6C1</color>
+    <color name="dpink">#e75480</color>
+    <color name="chcolor">#E682E6</color>
+    <color name="purple">#6a0dad</color>
+    <color name="white">#ffffff</color>
+    <color name="gray">#cccccc</color>
 </resources>

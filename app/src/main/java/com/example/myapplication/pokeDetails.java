@@ -40,7 +40,7 @@ public class pokeDetails extends AppCompatActivity {
 
         Intent intent=getIntent();
         pokemon pokemon1=(pokemon)intent.getSerializableExtra("pokemon");
-        setTitle(pokemon1.getName());
+        setTitle(changeLetter(pokemon1.getName()));
 
         type.setText(changeLetter(pokemon1.getOuterTypeList().get(0).getType().getName()));
         name.setText(changeLetter(pokemon1.getName()));

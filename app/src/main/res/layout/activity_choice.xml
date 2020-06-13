@@ -4,11 +4,80 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ee82ee"
+    android:background="@color/chcolor"
     tools:context=".Choice">
 
+    <Button
+        android:id="@+id/pokemon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/caller_button"
+        android:elevation="8dp"
+        android:fontFamily="@font/carter"
+        android:gravity="center"
+        android:text="POKEMONS"
+        android:textAlignment="center"
+        android:textColor="#ffff00"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <Button
+        android:id="@+id/regions"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/caller_button"
+        android:elevation="8dp"
+        android:fontFamily="@font/carter"
+        android:gravity="center"
+        android:text="REGIONS"
+        android:textAlignment="center"
+        android:textColor="#ffff00"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pokemon" />
+
+    <Button
+        android:id="@+id/favListBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/caller_button"
+        android:elevation="8dp"
+        android:fontFamily="@font/carter"
+        android:gravity="center"
+        android:text="FAVOURITES"
+        android:textAlignment="center"
+        android:textColor="#ffff00"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/regions" />
+
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageView3"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/powersource" />
+
+    <ImageView
+        android:id="@+id/pokeimg"
         android:layout_width="219dp"
         android:layout_height="202dp"
         android:layout_marginBottom="24dp"
@@ -22,45 +91,16 @@
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/choice_page" />
 
-    <Button
-        android:id="@+id/pokemon"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="80dp"
-        android:background="@drawable/caller_button"
-        android:elevation="8dp"
         android:fontFamily="@font/carter"
-        android:gravity="center"
-        android:text="POKEMONS"
-        android:textAlignment="center"
+        android:text="Data Set-"
         android:textColor="#ffff00"
-        android:textSize="38sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
-
-    <Button
-        android:id="@+id/regions"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:elevation="8dp"
-        android:background="@drawable/caller_button"
-        android:fontFamily="@font/carter"
-        android:gravity="center"
-        android:text="REGIONS"
-        android:textAlignment="center"
-        android:textColor="#ffff00"
-        android:textSize="38sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pokemon" />
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView3"
+        app:layout_constraintStart_toStartOf="@+id/imageView3" />
 
     <TextView
         android:id="@+id/textView6"
@@ -79,24 +119,41 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="80dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="4dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/powersource" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/imgbtn"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Data Set-"
-        android:textSize="15sp"
-        android:textColor="#ffff00"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="ITEMS"
+        android:background="@drawable/caller_button"
+        android:elevation="8dp"
         android:fontFamily="@font/carter"
-        app:layout_constraintBottom_toTopOf="@+id/imageView3"
-        app:layout_constraintStart_toStartOf="@+id/imageView3" />
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textColor="#ffff00"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/favListBtn" />
+
+    <Button
+        android:id="@+id/locationsbtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="LOCATIONS"
+        android:background="@drawable/caller_button"
+        android:elevation="8dp"
+        android:fontFamily="@font/carter"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textColor="#ffff00"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgbtn" />
 </androidx.constraintlayout.widget.ConstraintLayout>

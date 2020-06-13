@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EE82EE"
+    android:background="@drawable/poke_frame"
     tools:context=".list">
 
     <TextView
@@ -58,7 +58,6 @@
         android:layout_height="40dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:background="#ee82ee"
         android:rotation="90"
         app:layout_constraintBottom_toBottomOf="@+id/progressBar"
         app:layout_constraintEnd_toEndOf="parent"

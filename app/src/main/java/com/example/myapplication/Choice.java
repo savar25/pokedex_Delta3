@@ -16,6 +16,9 @@ public class Choice extends AppCompatActivity {
 
         Button poke=findViewById(R.id.pokemon);
         Button regio=findViewById(R.id.regions);
+        Button fav=findViewById(R.id.favListBtn);
+        Button items=findViewById(R.id.imgbtn);
+        Button locations=findViewById(R.id.locationsbtn);
 
         poke.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,5 +35,32 @@ public class Choice extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(Choice.this,favouriteList.class);
+                startActivity(intent);
+            }
+        });
+
+        items.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(Choice.this,itemsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        locations.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(Choice.this,locationActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
     }
 }
