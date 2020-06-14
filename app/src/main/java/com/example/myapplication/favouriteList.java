@@ -39,6 +39,7 @@ public class favouriteList extends AppCompatActivity {
     List<favListItem> favListItems;
     favListAdapter favListAdapter;
     RecyclerView fav;
+    List<favListItem> filter1=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +89,7 @@ public class favouriteList extends AppCompatActivity {
         }
 
         if(favListItems.size()!=0) {
+            filter1=favListItems;
             fav = findViewById(R.id.fav_rec);
             favListAdapter = new favListAdapter(favListItems, favouriteList.this);
             new ItemTouchHelper(simpleCallback).attachToRecyclerView(fav);
@@ -108,12 +110,21 @@ public class favouriteList extends AppCompatActivity {
 
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-           favListItem fav1=favListItems.get(viewHolder.getAdapterPosition());
-            Toast.makeText(favouriteList.this, "Removed from Favourites", Toast.LENGTH_SHORT).show();
-            Database.deleteTitle(fav1.getName());
-            favListItems.remove(viewHolder.getAdapterPosition());
-            favListAdapter.notifyDataSetChanged();
 
+            if(filter1==favListItems) {
+                favListItem fav1 = favListItems.get(viewHolder.getAdapterPosition());
+                Toast.makeText(favouriteList.this, "Removed from Favourites", Toast.LENGTH_SHORT).show();
+                Database.deleteTitle(fav1.getName());
+                favListItems.remove(viewHolder.getAdapterPosition());
+                favListAdapter.notifyDataSetChanged();
+            }else{
+                favListItem fav1 = filter1.get(viewHolder.getAdapterPosition());
+                Toast.makeText(favouriteList.this, "Removed from Favourites", Toast.LENGTH_SHORT).show();
+                Database.deleteTitle(fav1.getName());
+                favListItems.remove(fav1);
+                filter1.remove(viewHolder.getAdapterPosition());
+                favListAdapter.notifyDataSetChanged();
+            }
         }
 
         @Override
@@ -132,12 +143,15 @@ public class favouriteList extends AppCompatActivity {
     };
 
     public void filter(String s){
+
+
         List<favListItem> favListItems1=new ArrayList<>();
         for(favListItem f1:favListItems){
             if(f1.getName().toLowerCase().contains(s.toLowerCase())){
                 favListItems1.add(f1);
             }
         }
-        favListAdapter.filterList(favListItems1);
+        filter1=favListItems1;
+        favListAdapter.filterList(filter1);
     }
 }

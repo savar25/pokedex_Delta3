@@ -54,6 +54,7 @@ public class list extends AppCompatActivity {
     rvAdapter rvAdapter;
     RecyclerView recyclerView;
    sqlDatabase database;
+   List<pokemon> filter1=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -290,12 +291,15 @@ public class list extends AppCompatActivity {
                 filterList.add(p);
             }
         }
-        rvAdapter.filterList(filterList);
+
+        filter1=filterList;
+        rvAdapter.filterList(filter1);
 
     }
 
     public void generateList(List<pokemon> nameList){
             if(this.nameList.size()==k) {
+                filter1=nameList;
                 progressDialog.setVisibility(View.GONE);
                 recyclerView=findViewById(R.id.rec);
                 rvAdapter=new rvAdapter(nameList,list.this);
@@ -314,19 +318,39 @@ public class list extends AppCompatActivity {
             return false;
         }
 
+
+
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
-            pokemon itemPoke = nameList.get(viewHolder.getAdapterPosition());
-            if (checkTable(itemPoke.getName())) {
-                Toast.makeText(list.this, "Already in Favourites", Toast.LENGTH_SHORT).show();
-                rvAdapter.notifyDataSetChanged();
-            } else {
-                Toast.makeText(list.this, "Added to Favourites", Toast.LENGTH_SHORT).show();
-                database.addPoke(itemPoke);
-                nameList.remove(viewHolder.getAdapterPosition());
+            if (filter1 == nameList) {
+                pokemon itemPoke = nameList.get(viewHolder.getAdapterPosition());
 
-                rvAdapter.notifyDataSetChanged();
+                if (checkTable(itemPoke.getName())) {
+                    Toast.makeText(list.this, "Already in Favourites", Toast.LENGTH_SHORT).show();
+                    rvAdapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(list.this, "Added to Favourites", Toast.LENGTH_SHORT).show();
+                    database.addPoke(itemPoke);
+                    nameList.remove(viewHolder.getAdapterPosition());
+
+                    rvAdapter.notifyDataSetChanged();
+                }
+            }else{
+
+                pokemon itemPoke = filter1.get(viewHolder.getAdapterPosition());
+
+                if (checkTable(itemPoke.getName())) {
+                    Toast.makeText(list.this, "Already in Favourites", Toast.LENGTH_SHORT).show();
+                    rvAdapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(list.this, "Added to Favourites", Toast.LENGTH_SHORT).show();
+                    database.addPoke(itemPoke);
+                    filter1.remove(viewHolder.getAdapterPosition());
+                    nameList.remove(itemPoke);
+                    rvAdapter.notifyDataSetChanged();
+                }
+
             }
         }
 
